@@ -28,10 +28,17 @@ http.createServer(async (req, res) => {
     const searched = parsedUrl.query.searched;
 
     try {
-      if (!db) {
-        await client.connect();
-        db = client.db('Stocks');
-      }
+     if (!db) {
+  try {
+    await client.connect();
+    db = client.db('Stocks');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Failed to connect to MongoDB');
+    return;
+  }
+}
       const collection = db.collection('PublicCompanies');
 
       // look for answers to the query
