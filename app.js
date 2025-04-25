@@ -11,7 +11,7 @@ http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
 
   // give the index.html when the root path is visited
-  if (parsedUrl.pathname === '/process') {
+  if (parsedUrl.pathname === '/') {
     fs.readFile('index.html', (err, data) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
